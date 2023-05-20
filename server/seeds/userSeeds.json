@@ -1,0 +1,33 @@
+[
+  {
+    "username": "brian",
+    "email": "bkernighan@techfriends.dev",
+    "password": "password01",
+    "savedBooks": [
+      {
+        "authors": ["Author1"],
+        "description": "Book 1 description",
+        "bookId": "bookId1",
+        "image": "book1.jpg",
+        "link": "book1link",
+        "title": "Book 1"
+      },
+      {
+        "authors": ["Author2"],
+        "description": "Book 2 description",
+        "bookId": "bookId2",
+        "image": "book2.jpg",
+        "link": "book2link",
+        "title": "Book 2"
+      },
+      {
+        "authors": ["Author3"],
+        "description": "Book 3 description",
+        "bookId": "bookId3",
+        "image": "book3.jpg",
+        "link": "book3link",
+        "title": "Book 3"
+      }
+    ]
+  }
+]
