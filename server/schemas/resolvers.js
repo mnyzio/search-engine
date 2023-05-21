@@ -4,8 +4,11 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (parent, { username }) => {
-      return await User.findOne({ username: username });
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findOne({ username: context.user.username });
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
   Mutation: {
@@ -40,21 +43,29 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
+    // Allow delete only to logged in users
     // removeBook: async (parent, { bookId }, context) => {
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        await User.findByIdAndUpdate(
+        // { username: username },
+        await User.findOneAndUpdate(
           { userame: context.user.username },
-          { $pull: { saveBooks: bookId } }
+          { $pull: { savedBooks: { bookId: bookId } } },
+          { new: true }
         );
-        const user = await User.findOne({});
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    // { authors, description, title, bookId, image, link },
+    saveBook: async (parent, args, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { username: context.user.username },
+          { $addToSet: { savedBooks: { args } } },
+          { new: true }
+        );
       }
     },
-    saveBook: async (
-      parent,
-      { authors, description, title, bookId, image, link },
-      context
-    ) => {},
   },
 };
 

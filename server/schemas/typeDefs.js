@@ -7,7 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
     bookCount: Int
-    saveBooks: [Book]
+    savedBooks: [Book]
   }
 
   type Book {
@@ -25,7 +25,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    me(username: String!): User
+    me: User
   }
 
   type Mutation {
@@ -44,3 +44,5 @@ const typeDefs = gql`
 `;
 
 module.exports = typeDefs;
+// removeBook(username: String!, bookId: String!): User
+// me(username: String!): User
