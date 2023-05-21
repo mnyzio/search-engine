@@ -18,22 +18,19 @@ const typeDefs = gql`
     title: String!
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
     me(username: String!): User
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
   }
 `;
 
 module.exports = typeDefs;
-
-// ```
-//todo Mutations
-//todo change addUser to return Auth
-// addUser(username: String!, email: String!, password: String!): Auth
-//todo change login to return Auth
-// login(email: String!, password: String!): Auth
-// ```;
