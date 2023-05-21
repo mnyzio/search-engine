@@ -40,10 +40,20 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    removeBook: async (parent, { bookId }) => {},
+    // removeBook: async (parent, { bookId }, context) => {
+    removeBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        await User.findByIdAndUpdate(
+          { userame: context.user.username },
+          { $pull: { saveBooks: bookId } }
+        );
+        const user = await User.findOne({});
+      }
+    },
     saveBook: async (
       parent,
-      { authors, description, title, bookId, image, link }
+      { authors, description, title, bookId, image, link },
+      context
     ) => {},
   },
 };
