@@ -40,9 +40,12 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
+    removeBook: async (parent, { bookId }) => {},
+    saveBook: async (
+      parent,
+      { authors, description, title, bookId, image, link }
+    ) => {},
   },
 };
 
 module.exports = resolvers;
-
-// Mutation: {},
