@@ -44,10 +44,9 @@ const resolvers = {
       return { token, user };
     },
     // Allow delete only to logged in users
-    // removeBook: async (parent, { bookId }, context) => {
     removeBook: async (parent, { bookId }, context) => {
+      // If user key is not found in context return authentication error
       if (context.user) {
-        // { username: username },
         await User.findOneAndUpdate(
           { userame: context.user.username },
           { $pull: { savedBooks: { bookId: bookId } } },
@@ -56,8 +55,8 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    // { authors, description, title, bookId, image, link },
     saveBook: async (parent, args, context) => {
+      // If user key is not found in context return authentication error
       if (context.user) {
         await User.findOneAndUpdate(
           { username: context.user.username },
