@@ -46,12 +46,17 @@ const resolvers = {
     // Allow delete only to logged in users
     removeBook: async (parent, { bookId }, context) => {
       // If user key is not found in context return authentication error
+      console.log("Resolver, deleting book");
       if (context.user) {
-        await User.findOneAndUpdate(
-          { userame: context.user.username },
-          { $pull: { savedBooks: { bookId: bookId } } },
-          { new: true }
-        );
+        try {
+          return await User.findOneAndUpdate(
+            { username: context.user.username },
+            { $pull: { savedBooks: { bookId: bookId } } },
+            { new: true }
+          );
+        } catch (err) {
+          console.log("remove book error");
+        }
       }
       throw new AuthenticationError("You need to be logged in!");
     },
