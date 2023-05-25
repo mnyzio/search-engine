@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -8,13 +8,20 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
+  const [userData, setUserData] = useState({});
   const { loading, data } = useQuery(GET_ME, {
     fetchPolicy: "no-cache",
   });
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // Assign result of GET_ME queryt to variable userData
-  let userData = data?.me || {};
+  // let userData = data?.me || {};
+  useEffect(() => {
+    console.log("In the use");
+    if (data) {
+      setUserData(data.me);
+    }
+  }, [data]);
 
   // if data isn't here yet, say so
   if (loading) {
@@ -40,15 +47,21 @@ const SavedBooks = () => {
     }
     console.log(bookId);
     try {
-      const { data } = await removeBook({
+      // const { data } = await removeBook({
+      await removeBook({
         variables: { bookId },
       });
 
-      userData = data?.removeBook || userData;
+      // userData = data?.removeBook || userData;
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        savedBooks: prevUserData.savedBooks.filter(
+          (book) => book.bookId !== bookId
+        ),
+      }));
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
-      window.location.reload();
     } catch (err) {
       console.error(err);
     }
