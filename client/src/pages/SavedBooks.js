@@ -17,7 +17,6 @@ const SavedBooks = () => {
   // Assign result of GET_ME queryt to variable userData
   // let userData = data?.me || {};
   useEffect(() => {
-    console.log("In the use");
     if (data) {
       setUserData(data.me);
     }
@@ -45,7 +44,6 @@ const SavedBooks = () => {
     if (!token) {
       return false;
     }
-    console.log(bookId);
     try {
       // const { data } = await removeBook({
       await removeBook({
