@@ -11,12 +11,12 @@ const typeDefs = gql`
   }
 
   type Book {
-    authors: [String!]!
-    description: String!
+    authors: [String]
+    description: String
     bookId: String!
     image: String
     link: String
-    title: String!
+    title: String
   }
 
   type Auth {
@@ -44,3 +44,12 @@ const typeDefs = gql`
 `;
 
 module.exports = typeDefs;
+
+// type Book {
+//   authors: [String!]!
+//   description: String!
+//   bookId: String!
+//   image: String
+//   link: String
+//   title: String!
+// }
