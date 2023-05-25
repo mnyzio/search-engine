@@ -15,7 +15,7 @@ const SavedBooks = () => {
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // Assign result of GET_ME queryt to variable userData
-  // let userData = data?.me || {};
+  // const userData = data?.me || {};
   useEffect(() => {
     if (data) {
       setUserData(data.me);
@@ -68,7 +68,7 @@ const SavedBooks = () => {
   return (
     <>
       {/* <Container fluid className="text-light bg-dark p-5"> */}
-      <div fluid className="text-light bg-dark p-5">
+      <div fluid="true" className="text-light bg-dark p-5">
         {/* <div fluid className="text-light bg-dark p-5"> */}
         {/* <div className="text-light bg-dark p-5"> */}
         <Container>
@@ -87,7 +87,7 @@ const SavedBooks = () => {
         <Row>
           {userData.savedBooks.map((book) => {
             return (
-              <Col md="4">
+              <Col key={book.bookId} md="4">
                 <Card key={book.bookId} border="dark">
                   {book.image ? (
                     <Card.Img
