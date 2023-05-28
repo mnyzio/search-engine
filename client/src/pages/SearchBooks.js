@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
-
 import Auth from "../utils/auth";
 import { useMutation } from "@apollo/client";
 import { SAVE_BOOK } from "../utils/mutations";
-// import { saveBook, searchGoogleBooks } from "../utils/API";
 import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 
@@ -75,10 +73,6 @@ const SearchBooks = () => {
         variables: { ...bookToSave },
       });
 
-      // if (!response.ok) {
-      //   throw new Error("something went wrong!");
-      // }
-
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
@@ -123,7 +117,7 @@ const SearchBooks = () => {
           {searchedBooks.map((book) => {
             return (
               <Col key={book.bookId} md="4">
-                <Card border="dark">
+                <Card key={book.bookId} border="dark">
                   {book.image ? (
                     <Card.Img
                       src={book.image}

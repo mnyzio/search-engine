@@ -46,6 +46,7 @@ const resolvers = {
     // Allow delete only to logged in users
     removeBook: async (parent, { bookId }, context) => {
       // If user key is not found in context return authentication error
+      // otherwise find user that is logged in and removed book from saved book by bookId
       if (context.user) {
         try {
           return await User.findOneAndUpdate(

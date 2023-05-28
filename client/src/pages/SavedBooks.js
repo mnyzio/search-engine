@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { REMOVE_BOOK } from "../utils/mutations";
@@ -15,7 +14,6 @@ const SavedBooks = () => {
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // Assign result of GET_ME queryt to variable userData
-  // const userData = data?.me || {};
   useEffect(() => {
     if (data) {
       setUserData(data.me);
@@ -45,7 +43,6 @@ const SavedBooks = () => {
       return false;
     }
     try {
-      // const { data } = await removeBook({
       await removeBook({
         variables: { bookId },
       });
@@ -75,17 +72,16 @@ const SavedBooks = () => {
           <h1>Viewing saved books!</h1>
         </Container>
       </div>
-      {/* </Container> */}
       <Container>
         <h2 className="pt-5">
-          {userData.savedBooks.length
+          {userData?.savedBooks?.length
             ? `Viewing ${userData.savedBooks.length} saved ${
                 userData.savedBooks.length === 1 ? "book" : "books"
               }:`
             : "You have no saved books!"}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {userData?.savedBooks?.map((book) => {
             return (
               <Col key={book.bookId} md="4">
                 <Card key={book.bookId} border="dark">
